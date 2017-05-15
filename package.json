@@ -1,0 +1,28 @@
+{
+  "name": "@process-engine-js/bootstrapper_node",
+  "publishConfig": {
+    "registry": "https://www.npmjs.com"
+  },
+  "version": "1.0.2",
+  "description": "the bootstrapper to start a node application",
+  "license": "MIT",
+  "main": "dist/commonjs/index.js",
+  "typings": "dist/index.d.ts",
+  "contributors": [
+    "Sebastian Meier <sebastian.meier@5minds.de>",
+    "Patrick Pötschke <patrick.poetschke@quantusflow.com>",
+    "Simon Reymann <simon.reymann@quantusflow.com>"
+  ],
+  "dependencies": {
+    "@process-engine-js/bootstrapper": "^1.0.2",
+    "@process-engine-js/core_contracts": "^1.0.40",
+    "@process-engine-js/utils": "^1.0.2",
+    "addict-ioc": "^1.0.6",
+    "addict-ioc-nconf": "^1.1.1",
+    "bluebird": "^3.5.0",
+    "loggerhythm": "^1.0.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
