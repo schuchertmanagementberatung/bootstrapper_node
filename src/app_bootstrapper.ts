@@ -1,13 +1,8 @@
 import {DependencyInjectionContainer as Container} from 'addict-ioc';
 import {configureAddictIocWithNconf as configureAddictIocWithNconf} from 'addict-ioc-nconf';
-import * as bluebirdPromise from 'bluebird';
-import * as path from 'path';
-import * as util from 'util';
 import {ExtensionBootstrapper} from '@process-engine-js/bootstrapper';
-import {IFactory, ExtensionDiscoveryTag} from '@process-engine-js/core_contracts';
-
-import * as createLogger from 'loggerhythm';
-const logger = createLogger('bootstrapper');
+import {IFactory, ExtensionDiscoveryTag as extensionDiscoveryTag} from '@process-engine-js/core_contracts';
+import * as path from 'path';
 
 export class AppBootstrapper {
 
