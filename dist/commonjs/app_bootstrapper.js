@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const addict_ioc_nconf_1 = require("addict-ioc-nconf");
+const core_contracts_1 = require("@process-engine-js/core_contracts");
 const path = require("path");
-exports.extensionDiscoveryTag = 'extension';
 class AppBootstrapper {
     constructor(_container, extensionBootstrapperLazy, appRoot) {
         this._appRoot = process.cwd();
@@ -13,7 +13,7 @@ class AppBootstrapper {
         if (appRoot) {
             this._appRoot = path.normalize(appRoot);
         }
-        this._extensionBootstrapper = extensionBootstrapperLazy([exports.extensionDiscoveryTag]);
+        this._extensionBootstrapper = extensionBootstrapperLazy([core_contracts_1.ExtensionDiscoveryTag]);
         this.container.registerObject('appBootstrapper', this);
     }
     get isInitialized() {

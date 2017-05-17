@@ -1,10 +1,8 @@
 import {DependencyInjectionContainer as Container} from 'addict-ioc';
 import {configureAddictIocWithNconf as configureAddictIocWithNconf} from 'addict-ioc-nconf';
-import * as path from 'path';
 import {ExtensionBootstrapper} from '@process-engine-js/bootstrapper';
-import {IFactory} from '@process-engine-js/core_contracts';
-
-export const extensionDiscoveryTag: string = 'extension';
+import {IFactory, ExtensionDiscoveryTag as extensionDiscoveryTag} from '@process-engine-js/core_contracts';
+import * as path from 'path';
 
 export class AppBootstrapper {
 
