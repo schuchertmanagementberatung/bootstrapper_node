@@ -1,7 +1,6 @@
 import { DependencyInjectionContainer as Container } from 'addict-ioc';
 import { ExtensionBootstrapper } from '@process-engine-js/bootstrapper';
 import { IFactory } from '@process-engine-js/core_contracts';
-export declare const extensionDiscoveryTag: string;
 export declare class AppBootstrapper {
     private _container;
     private _appRoot;

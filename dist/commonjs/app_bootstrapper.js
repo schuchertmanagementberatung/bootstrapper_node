@@ -36,9 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var addict_ioc_nconf_1 = require("addict-ioc-nconf");
 var path = require("path");
+var core_contracts_1 = require("@process-engine-js/core_contracts");
 var createLogger = require("loggerhythm");
 var logger = createLogger('bootstrapper');
-exports.extensionDiscoveryTag = 'extension';
 var AppBootstrapper = (function () {
     function AppBootstrapper(_container, extensionBootstrapperLazy, appRoot) {
         this._appRoot = process.cwd();
@@ -49,7 +49,7 @@ var AppBootstrapper = (function () {
         if (appRoot) {
             this._appRoot = path.normalize(appRoot);
         }
-        this._extensionBootstrapper = extensionBootstrapperLazy([exports.extensionDiscoveryTag]);
+        this._extensionBootstrapper = extensionBootstrapperLazy([core_contracts_1.ExtensionDiscoveryTag]);
         this.container.registerObject('appBootstrapper', this);
     }
     Object.defineProperty(AppBootstrapper.prototype, "isInitialized", {

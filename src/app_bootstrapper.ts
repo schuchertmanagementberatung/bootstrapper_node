@@ -4,12 +4,10 @@ import * as bluebirdPromise from 'bluebird';
 import * as path from 'path';
 import * as util from 'util';
 import {ExtensionBootstrapper} from '@process-engine-js/bootstrapper';
-import {IFactory} from '@process-engine-js/core_contracts';
+import {IFactory, ExtensionDiscoveryTag} from '@process-engine-js/core_contracts';
 
 import * as createLogger from 'loggerhythm';
 const logger = createLogger('bootstrapper');
-
-export const extensionDiscoveryTag: string = 'extension';
 
 export class AppBootstrapper {
 
@@ -27,7 +25,7 @@ export class AppBootstrapper {
     if (appRoot) {
       this._appRoot = path.normalize(appRoot);
     }
-    this._extensionBootstrapper = extensionBootstrapperLazy([extensionDiscoveryTag]);
+    this._extensionBootstrapper = extensionBootstrapperLazy([ExtensionDiscoveryTag]);
     this.container.registerObject('appBootstrapper', this);
 
   }
