@@ -20,7 +20,7 @@ export class AppBootstrapper {
     if (appRoot) {
       this._appRoot = path.normalize(appRoot);
     }
-    this._extensionBootstrapper = extensionBootstrapperLazy([ExtensionDiscoveryTag]);
+    this._extensionBootstrapper = extensionBootstrapperLazy([extensionDiscoveryTag]);
     this.container.registerObject('appBootstrapper', this);
 
   }

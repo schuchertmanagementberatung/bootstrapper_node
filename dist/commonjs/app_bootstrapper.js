@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const addict_ioc_nconf_1 = require("addict-ioc-nconf");
 const core_contracts_1 = require("@process-engine-js/core_contracts");
 const path = require("path");
@@ -38,7 +37,6 @@ class AppBootstrapper {
         return this._configPath;
     }
     initializeLogging() {
-        return;
     }
     async initialize() {
         if (!this.isInitialized) {
