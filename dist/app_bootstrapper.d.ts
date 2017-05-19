@@ -1,4 +1,4 @@
-import { DependencyInjectionContainer as Container } from 'addict-ioc';
+import { Container } from 'addict-ioc';
 import { ExtensionBootstrapper } from '@process-engine-js/bootstrapper';
 import { IFactory } from '@process-engine-js/core_contracts';
 export declare class AppBootstrapper {
@@ -16,6 +16,7 @@ export declare class AppBootstrapper {
     readonly env: string;
     readonly configPath: string;
     protected initializeLogging(): void;
+    private initializeConfigProvider();
     initialize(): Promise<void>;
     start(): Promise<void>;
 }

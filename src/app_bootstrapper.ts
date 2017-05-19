@@ -1,8 +1,9 @@
-import {DependencyInjectionContainer as Container} from 'addict-ioc';
-import {configureAddictIocWithNconf as configureAddictIocWithNconf} from 'addict-ioc-nconf';
+import {Container} from 'addict-ioc';
 import {ExtensionBootstrapper} from '@process-engine-js/bootstrapper';
 import {IFactory, ExtensionDiscoveryTag as extensionDiscoveryTag} from '@process-engine-js/core_contracts';
+import {ConfigResolver} from './config_resolver';
 import * as path from 'path';
+import * as nconf from 'nconf';
 
 export class AppBootstrapper {
 
@@ -56,11 +57,23 @@ export class AppBootstrapper {
   protected initializeLogging(): void {
   }
 
+  private initializeConfigProvider() {
+
+    require('nconfetti'); // eslint-disable-line
+
+    nconf.argv()
+      .env('__');
+
+    nconf.use('Nconfetti', {path: this.configPath, env: this.env});
+
+    this.container.settings.resolver = new ConfigResolver(nconf);
+  }
+
   public async initialize(): Promise<void> {
     if (!this.isInitialized) {
       this.initializeLogging();
 
-      configureAddictIocWithNconf(this.container, {configPath: this.configPath, env: this.env});
+      this.initializeConfigProvider();
 
       await this.extensionBootstrapper.initialize();
       this.isInitialized = true;
