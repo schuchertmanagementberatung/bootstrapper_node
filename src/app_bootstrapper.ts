@@ -10,7 +10,7 @@ export class AppBootstrapper {
   private _container: Container;
   private _appRoot: string = process.cwd();
   private _env: string = process.env.NODE_ENV || 'development';
-  private _configPath: string = process.env.CONFIG_PATH || this._appRoot;
+  private _configPath: string = process.env.CONFIG_PATH || path.resolve(this._appRoot, 'config');
   private _extensionBootstrapper: ExtensionBootstrapper;
   private _isInitialized: boolean = false;
 

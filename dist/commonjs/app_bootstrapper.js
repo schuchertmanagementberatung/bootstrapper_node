@@ -7,7 +7,7 @@ class AppBootstrapper {
     constructor(_container, extensionBootstrapperLazy, appRoot) {
         this._appRoot = process.cwd();
         this._env = process.env.NODE_ENV || 'development';
-        this._configPath = process.env.CONFIG_PATH || this._appRoot;
+        this._configPath = process.env.CONFIG_PATH || path.resolve(this._appRoot, 'config');
         this._isInitialized = false;
         this._container = _container;
         if (appRoot) {

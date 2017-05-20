@@ -14,6 +14,14 @@ export class ConfigResolver extends Resolver {
   }
 
   resolveConfig(configNamespace) {
-    return this.nconf.get(configNamespace);
+
+    const configType = typeof configNamespace;
+
+    switch (configType) {
+      case 'function': return configNamespace();
+      case 'object': return configNamespace;
+      case 'string': return this.nconf.get(configNamespace);
+      default: return undefined;
+    }
   }
 }
