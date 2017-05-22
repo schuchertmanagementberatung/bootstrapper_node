@@ -1,13 +1,13 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const addict_ioc_nconf_1 = require("addict-ioc-nconf");
 const core_contracts_1 = require("@process-engine-js/core_contracts");
+const config_resolver_1 = require("./config_resolver");
 const path = require("path");
+const nconf = require("nconf");
 class AppBootstrapper {
     constructor(_container, extensionBootstrapperLazy, appRoot) {
         this._appRoot = process.cwd();
         this._env = process.env.NODE_ENV || 'development';
-        this._configPath = process.env.CONFIG_PATH || this._appRoot;
+        this._configPath = process.env.CONFIG_PATH || path.resolve(this._appRoot, 'config');
         this._isInitialized = false;
         this._container = _container;
         if (appRoot) {
@@ -39,10 +39,17 @@ class AppBootstrapper {
     }
     initializeLogging() {
     }
+    initializeConfigProvider() {
+        require('nconfetti');
+        nconf.argv()
+            .env('__');
+        nconf.use('Nconfetti', { path: this.configPath, env: this.env });
+        this.container.settings.resolver = new config_resolver_1.ConfigResolver(nconf);
+    }
     async initialize() {
         if (!this.isInitialized) {
             this.initializeLogging();
-            addict_ioc_nconf_1.configureAddictIocWithNconf(this.container, { configPath: this.configPath, env: this.env });
+            this.initializeConfigProvider();
             await this.extensionBootstrapper.initialize();
             this.isInitialized = true;
         }

@@ -17,7 +17,7 @@
     "@process-engine-js/bootstrapper": "^1.0.2",
     "@process-engine-js/core_contracts": "^1.0.40",
     "@process-engine-js/utils": "^1.0.2",
-    "addict-ioc": "^1.0.6",
+    "addict-ioc": "^2.0.0",
     "addict-ioc-nconf": "^1.1.1",
     "bluebird": "^3.5.0",
     "loggerhythm": "^1.0.1"

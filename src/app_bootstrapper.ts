@@ -1,15 +1,16 @@
-import {DependencyInjectionContainer as Container} from 'addict-ioc';
-import {configureAddictIocWithNconf as configureAddictIocWithNconf} from 'addict-ioc-nconf';
+import {Container} from 'addict-ioc';
 import {ExtensionBootstrapper} from '@process-engine-js/bootstrapper';
 import {IFactory, ExtensionDiscoveryTag as extensionDiscoveryTag} from '@process-engine-js/core_contracts';
+import {ConfigResolver} from './config_resolver';
 import * as path from 'path';
+import * as nconf from 'nconf';
 
 export class AppBootstrapper {
 
   private _container: Container;
   private _appRoot: string = process.cwd();
   private _env: string = process.env.NODE_ENV || 'development';
-  private _configPath: string = process.env.CONFIG_PATH || this._appRoot;
+  private _configPath: string = process.env.CONFIG_PATH || path.resolve(this._appRoot, 'config');
   private _extensionBootstrapper: ExtensionBootstrapper;
   private _isInitialized: boolean = false;
 
@@ -56,11 +57,23 @@ export class AppBootstrapper {
   protected initializeLogging(): void {
   }
 
+  private initializeConfigProvider() {
+
+    require('nconfetti'); // eslint-disable-line
+
+    nconf.argv()
+      .env('__');
+
+    nconf.use('Nconfetti', {path: this.configPath, env: this.env});
+
+    this.container.settings.resolver = new ConfigResolver(nconf);
+  }
+
   public async initialize(): Promise<void> {
     if (!this.isInitialized) {
       this.initializeLogging();
 
-      configureAddictIocWithNconf(this.container, {configPath: this.configPath, env: this.env});
+      this.initializeConfigProvider();
 
       await this.extensionBootstrapper.initialize();
       this.isInitialized = true;
