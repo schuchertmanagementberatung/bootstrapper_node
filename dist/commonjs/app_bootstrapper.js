@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const core_contracts_1 = require("@process-engine-js/core_contracts");
 const config_resolver_1 = require("./config_resolver");
 const path = require("path");

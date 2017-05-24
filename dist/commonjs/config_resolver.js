@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const addict_ioc_1 = require("addict-ioc");
 class ConfigResolver extends addict_ioc_1.Resolver {
     constructor(nconf) {
