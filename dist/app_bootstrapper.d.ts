@@ -1,4 +1,4 @@
-import { Container } from 'addict-ioc';
+import { Container, IInstanceWrapper } from 'addict-ioc';
 import { ExtensionBootstrapper } from '@process-engine-js/bootstrapper';
 import { IFactory } from '@process-engine-js/core_contracts';
 export declare class AppBootstrapper {
@@ -8,10 +8,10 @@ export declare class AppBootstrapper {
     private _configPath;
     private _extensionBootstrapper;
     private _isInitialized;
-    constructor(_container: Container, extensionBootstrapperLazy: IFactory<ExtensionBootstrapper>, appRoot?: string);
+    constructor(_container: Container<IInstanceWrapper<any>>, extensionBootstrapperLazy: IFactory<ExtensionBootstrapper>, appRoot?: string);
     protected isInitialized: boolean;
     readonly appRoot: string;
-    protected readonly container: Container;
+    protected readonly container: Container<IInstanceWrapper<any>>;
     protected readonly extensionBootstrapper: ExtensionBootstrapper;
     readonly env: string;
     readonly configPath: string;

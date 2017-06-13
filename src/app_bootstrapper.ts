@@ -1,4 +1,4 @@
-import {Container} from 'addict-ioc';
+import {Container, IInstanceWrapper} from 'addict-ioc';
 import {ExtensionBootstrapper} from '@process-engine-js/bootstrapper';
 import {IFactory, ExtensionDiscoveryTag as extensionDiscoveryTag} from '@process-engine-js/core_contracts';
 import {ConfigResolver} from './config_resolver';
@@ -7,14 +7,14 @@ import * as nconf from 'nconf';
 
 export class AppBootstrapper {
 
-  private _container: Container;
+  private _container: Container<IInstanceWrapper<any>>;
   private _appRoot: string = process.cwd();
   private _env: string = process.env.NODE_ENV || 'development';
   private _configPath: string = process.env.CONFIG_PATH || path.resolve(this._appRoot, 'config');
   private _extensionBootstrapper: ExtensionBootstrapper;
   private _isInitialized: boolean = false;
 
-  constructor(_container: Container,
+  constructor(_container: Container<IInstanceWrapper<any>>,
               extensionBootstrapperLazy: IFactory<ExtensionBootstrapper>,
               appRoot?: string) {
     this._container = _container;
@@ -38,7 +38,7 @@ export class AppBootstrapper {
     return this._appRoot;
   }
 
-  protected get container(): Container {
+  protected get container(): Container<IInstanceWrapper<any>> {
     return this._container;
   }
 
@@ -55,6 +55,7 @@ export class AppBootstrapper {
   }
 
   protected initializeLogging(): void {
+    return;
   }
 
   private initializeConfigProvider() {

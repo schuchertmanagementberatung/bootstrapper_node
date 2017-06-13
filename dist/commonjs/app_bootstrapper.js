@@ -39,6 +39,7 @@ class AppBootstrapper {
         return this._configPath;
     }
     initializeLogging() {
+        return;
     }
     initializeConfigProvider() {
         require('nconfetti');
