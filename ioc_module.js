@@ -6,7 +6,7 @@ function registerInContainer(container) {
 
   container.register('AppBootstrapper', AppBootstrapper)
     .dependencies('container', 'ExtensionBootstrapper')
-    .injectLazy('ExtensionBootstrapper')
+    .injectPromiseLazy('ExtensionBootstrapper')
     .singleton();
 }
 

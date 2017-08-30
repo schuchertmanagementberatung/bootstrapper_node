@@ -1,6 +1,6 @@
-import {Container, IInstanceWrapper} from 'addict-ioc';
+import {Container, IInstanceWrapper, IFactoryAsync} from 'addict-ioc';
 import {ExtensionBootstrapper} from '@process-engine-js/bootstrapper';
-import {IFactory, ExtensionDiscoveryTag as extensionDiscoveryTag} from '@process-engine-js/core_contracts';
+import {ExtensionDiscoveryTag as extensionDiscoveryTag} from '@process-engine-js/core_contracts';
 import {ConfigResolver} from './config_resolver';
 import * as path from 'path';
 import * as nconf from 'nconf';
@@ -11,27 +11,17 @@ export class AppBootstrapper {
   private _appRoot: string = process.cwd();
   private _env: string = process.env.NODE_ENV || 'development';
   private _configPath: string = process.env.CONFIG_PATH || path.resolve(this._appRoot, 'config');
-  private _extensionBootstrapper: ExtensionBootstrapper;
-  private _isInitialized: boolean = false;
+  private extensionBootstrapperFactory: IFactoryAsync<ExtensionBootstrapper>;
+  private extensionBootstrapper: ExtensionBootstrapper;
 
   constructor(_container: Container<IInstanceWrapper<any>>,
-              extensionBootstrapperLazy: IFactory<ExtensionBootstrapper>,
+              extensionBootstrapperFactory: IFactoryAsync<ExtensionBootstrapper>,
               appRoot?: string) {
     this._container = _container;
+    this.extensionBootstrapperFactory = extensionBootstrapperFactory;
     if (appRoot) {
       this._appRoot = path.normalize(appRoot);
     }
-    this._extensionBootstrapper = extensionBootstrapperLazy([extensionDiscoveryTag]);
-    this.container.registerObject('appBootstrapper', this);
-
-  }
-
-  protected get isInitialized(): boolean {
-    return this._isInitialized;
-  }
-
-  protected set isInitialized(initialize: boolean) {
-    this._isInitialized = initialize;
   }
 
   public get appRoot(): string {
@@ -42,20 +32,12 @@ export class AppBootstrapper {
     return this._container;
   }
 
-  protected get extensionBootstrapper(): ExtensionBootstrapper {
-    return this._extensionBootstrapper;
-  }
-
   public get env(): string {
     return this._env;
   }
 
   public get configPath(): string {
     return this._configPath;
-  }
-
-  protected initializeLogging(): void {
-    return;
   }
 
   private initializeConfigProvider() {
@@ -71,21 +53,13 @@ export class AppBootstrapper {
   }
 
   public async initialize(): Promise<void> {
-    if (!this.isInitialized) {
-      this.initializeLogging();
+    this.extensionBootstrapper = await this.extensionBootstrapperFactory([extensionDiscoveryTag]);
 
-      this.initializeConfigProvider();
-
-      await this.extensionBootstrapper.initialize();
-      this.isInitialized = true;
-    }
+    this.initializeConfigProvider();
   }
 
   public async start(): Promise<void> {
-
-    await this.initialize();
     await this.extensionBootstrapper.start();
-
   }
 
 }
