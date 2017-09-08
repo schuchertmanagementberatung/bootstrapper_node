@@ -1,9 +1,9 @@
-import {Container, IInstanceWrapper, IFactoryAsync} from 'addict-ioc';
 import {ExtensionBootstrapper} from '@process-engine-js/bootstrapper';
 import {ExtensionDiscoveryTag as extensionDiscoveryTag} from '@process-engine-js/core_contracts';
-import {ConfigResolver} from './config_resolver';
-import * as path from 'path';
+import {Container, IFactoryAsync, IInstanceWrapper} from 'addict-ioc';
 import * as nconf from 'nconf';
+import * as path from 'path';
+import {ConfigResolver} from './config_resolver';
 
 export class AppBootstrapper {
 
