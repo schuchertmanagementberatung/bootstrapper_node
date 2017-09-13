@@ -40,9 +40,9 @@ export class AppBootstrapper {
     return this._configPath;
   }
 
-  private initializeConfigProvider() {
+  private initializeConfigProvider(): void {
 
-    require('nconfetti'); // eslint-disable-line
+    require('nconfetti'); // tslint:disable-line
 
     nconf.argv()
       .env('__');
