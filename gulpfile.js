@@ -14,7 +14,7 @@ buildSystem.config = buildSystemConfig;
 const tsConfigObj = tsconfig.loadSync('.');
 
 const typeScriptConfig = Object.assign({
-  compileToModules: ['commonjs', 'amd']
+  compileToModules: ['commonjs']
 }, tsConfigObj.config);
 
 const gulp = require('gulp');
@@ -22,5 +22,3 @@ const gulp = require('gulp');
 buildSystem
   .registerPlugin('typescript', gulptraumTypescriptPlugin, typeScriptConfig)
   .registerTasks(gulp);
-
-  
