@@ -42,7 +42,13 @@ export class AppBootstrapper {
 
   private initializeConfigProvider(): void {
 
-    require('nconfetti'); // tslint:disable-line
+    // nconfetti tries to register itself to nconf
+    // (here: https://github.com/5minds/nconfetti/blob/f9eae47cd3a194136b6b06328efcf6f39836c9d3/lib/nconfetti.js#L134)
+    // for this to work however, the nconf-instance in nconfetti has to be the
+    // same instance we have here in this file. This on the other hand seems to
+    // not always be the case. We can still make it work, by manually
+    // registering nconfetti to our nconf-instance we have here.
+    nconf.Nconfetti = require('nconfetti'); // tslint:disable-line
 
     nconf.argv()
       .env('__');
