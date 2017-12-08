@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://www.npmjs.com"
   },
-  "version": "1.0.0-rc1",
+  "version": "1.0.0-rc2",
   "description": "the bootstrapper to start a node application",
   "license": "MIT",
   "main": "dist/commonjs/index.js",
