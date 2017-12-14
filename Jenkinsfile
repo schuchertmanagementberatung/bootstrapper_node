@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+
 /*
  * Template Jenkinsfile for process-engine projects.
  *
@@ -18,22 +20,26 @@
 pipeline {
   agent any
   tools {
-    nodejs "node-v7"
+    nodejs "node-lts"
   }
 
   stages {
     stage('prepare') {
       steps {
+        sh 'node --version'
         sh 'npm install --ignore-scripts'
       }
     }
     stage('lint') {
       steps {
+        sh 'node --version'
+        /* we do not want the linting to cause a failed build */
         sh 'npm run lint || true'
       }
     }
     stage('build') {
       steps {
+        sh 'node --version'
         sh 'npm run build'
         sh 'npm run build-schemas'
         sh 'npm run build-doc'
@@ -41,7 +47,19 @@ pipeline {
     }
     stage('test') {
       steps {
+        sh 'node --version'
         sh 'npm run test'
+      }
+    }
+    stage('publish') {
+      when {
+        branch 'master'
+      }
+      steps {
+        nodejs(configId: 'process-engine-ci-token', nodeJSInstallationName: 'node-lts') {
+          sh 'node --version'
+          sh 'npm publish --ignore-scripts'
+        }
       }
     }
   }
