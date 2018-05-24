@@ -68,4 +68,8 @@ export class AppBootstrapper {
     await this.extensionBootstrapper.start();
   }
 
+  public async stop(): Promise<void> {
+    await this.extensionBootstrapper.stop();
+  }
+
 }
