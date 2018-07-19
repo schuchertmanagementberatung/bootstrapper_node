@@ -1,5 +1,5 @@
 import {ExtensionBootstrapper} from '@essential-projects/bootstrapper';
-import {ExtensionDiscoveryTag as extensionDiscoveryTag} from '@essential-projects/core_contracts';
+import {extensionDiscoveryTag} from '@essential-projects/bootstrapper_contracts';
 import {Container, IFactoryAsync, IInstanceWrapper} from 'addict-ioc';
 import * as nconf from 'nconf';
 import * as path from 'path';
