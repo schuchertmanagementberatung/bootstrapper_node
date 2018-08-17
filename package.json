@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://www.npmjs.com"
   },
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "the bootstrapper to start a node application",
   "license": "MIT",
   "main": "dist/commonjs/index.js",
@@ -17,8 +17,8 @@
     "@essential-projects/bootstrapper": "^3.0.0",
     "@essential-projects/bootstrapper_contracts": "^1.0.0",
     "addict-ioc": "^2.2.8",
-    "addict-ioc-nconf": "^1.1.1",
-    "bluebird": "^3.5.0"
+    "bluebird": "^3.5.0",
+    "nconfetti": "2.0.2"
   },
   "devDependencies": {
     "@essential-projects/tslint-config": "^1.0.0",
