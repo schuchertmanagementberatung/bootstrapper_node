@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "@essential-projects/bootstrapper": "^3.0.0",
-    "@essential-projects/bootstrapper_contracts": "^1.0.0",
+    "@essential-projects/bootstrapper_contracts": "feature~async_notifications",
     "addict-ioc": "^2.2.8",
     "bluebird": "^3.5.0",
     "nconfetti": "2.0.2"
