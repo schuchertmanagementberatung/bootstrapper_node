@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://www.npmjs.com"
   },
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "the bootstrapper to start a node application",
   "license": "MIT",
   "main": "dist/commonjs/index.js",
@@ -13,8 +13,9 @@
     "Sebastian Meier <sebastian.meier@5minds.de>"
   ],
   "dependencies": {
-    "@essential-projects/bootstrapper": "~3.2.0",
+    "@essential-projects/bootstrapper": "~3.2.1",
     "@essential-projects/bootstrapper_contracts": "~1.2.0",
+    "addict-ioc": "~2.5.1",
     "bluebird": "3.5.2",
     "nconfetti": "2.0.2"
   },
@@ -27,14 +28,9 @@
     "tslint": "5.11.0",
     "typescript": "3.1.6"
   },
-  "peerDependencies": {
-    "addict-ioc": "~2.5.0"
-  },
   "scripts": {
     "build": "gulp build",
     "prepare": "npm run build",
-    "build-doc": "gulp doc",
-    "build-schemas": "gulp typescript-schema",
     "lint": "gulp lint",
     "test": "gulp test"
   }
