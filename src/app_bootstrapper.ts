@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-naming */
 import {ExtensionBootstrapper} from '@essential-projects/bootstrapper';
 import {extensionDiscoveryTag} from '@essential-projects/bootstrapper_contracts';
 import {Container, IFactoryAsync, IInstanceWrapper} from 'addict-ioc';
@@ -7,37 +8,25 @@ import {ConfigResolver} from './config_resolver';
 
 export class AppBootstrapper {
 
-  private _container: Container<IInstanceWrapper<any>>;
-  private _appRoot: string = process.cwd();
-  private _env: string = process.env.NODE_ENV || 'development';
-  private _configPath: string = process.env.CONFIG_PATH || path.resolve(this._appRoot, 'config');
+  public readonly appRoot = process.cwd();
+  public readonly env = process.env.NODE_ENV || 'development';
+  public readonly configPath = process.env.CONFIG_PATH || path.resolve(this.appRoot, 'config');
+
+  protected readonly container: Container<IInstanceWrapper<any>>;
+
   private extensionBootstrapperFactory: IFactoryAsync<ExtensionBootstrapper>;
   private extensionBootstrapper: ExtensionBootstrapper;
 
-  constructor(_container: Container<IInstanceWrapper<any>>,
-              extensionBootstrapperFactory: IFactoryAsync<ExtensionBootstrapper>,
-              appRoot?: string) {
-    this._container = _container;
+  constructor(
+    container: Container<IInstanceWrapper<any>>,
+    extensionBootstrapperFactory: IFactoryAsync<ExtensionBootstrapper>,
+    appRoot?: string,
+  ) {
+    this.container = container;
     this.extensionBootstrapperFactory = extensionBootstrapperFactory;
     if (appRoot) {
-      this._appRoot = path.normalize(appRoot);
+      this.appRoot = path.normalize(appRoot);
     }
-  }
-
-  public get appRoot(): string {
-    return this._appRoot;
-  }
-
-  protected get container(): Container<IInstanceWrapper<any>> {
-    return this._container;
-  }
-
-  public get env(): string {
-    return this._env;
-  }
-
-  public get configPath(): string {
-    return this._configPath;
   }
 
   private initializeConfigProvider(): void {
@@ -48,7 +37,8 @@ export class AppBootstrapper {
     // same instance we have here in this file. This on the other hand seems to
     // not always be the case. We can still make it work, by manually
     // registering nconfetti to our nconf-instance we have here.
-    nconf.Nconfetti = require('nconfetti'); // tslint:disable-line
+    // eslint-disable-next-line
+    (nconf as any).Nconfetti = require('nconfetti');
 
     nconf.argv()
       .env('__');

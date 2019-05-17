@@ -2,15 +2,11 @@ import {IInstanceWrapper, Resolver} from 'addict-ioc';
 
 export class ConfigResolver extends Resolver<any, IInstanceWrapper<any>> {
 
-  private _nconf: any = undefined;
+  public readonly nconf: any;
 
   constructor(nconf: any) {
     super();
-    this._nconf = nconf;
-  }
-
-  public get nconf(): any {
-    return this._nconf;
+    this.nconf = nconf;
   }
 
   public resolveConfig(configNamespace: Function | {} | string): any {
@@ -28,4 +24,5 @@ export class ConfigResolver extends Resolver<any, IInstanceWrapper<any>> {
         return undefined;
     }
   }
+
 }
