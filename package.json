@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "@essential-projects/bootstrapper": "feature~change_to_eslint_and_tsc",
-    "@essential-projects/bootstrapper_contracts": "feature~change_to_eslint_and_tsc",
+    "@essential-projects/bootstrapper_contracts": "^1.4.0",
     "addict-ioc": "~2.5.1",
     "bluebird": "~3.5.2",
     "nconfetti": "~2.1.0"
