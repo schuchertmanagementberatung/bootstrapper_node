@@ -1,7 +1,7 @@
 {
   "name": "@schuchertmanagementberatung/bootstrapper_node",
   "publishConfig": {
-    "registry": "https://www.npmjs.com"
+    "registry": "https://npm.pkg.github.com/"
   },
   "version": "4.0.0",
   "description": "the bootstrapper to start a node application",
