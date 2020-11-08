@@ -12,35 +12,27 @@ def cleanup_workspace() {
     deleteDir()
   }
 }
-
 pipeline {
   agent any
   tools {
     nodejs "node-lts"
   }
   environment {
-    NPM_RC_FILE = 'process-engine-ci-token'
+    NPM_RC_FILE = 'frontend-npm-token'
     NODE_JS_VERSION = 'node-lts'
   }
-
   stages {
     stage('prepare') {
       steps {
         script {
-          raw_package_version = sh(script: 'node --print --eval "require(\'./package.json\').version"', returnStdout: true).trim()
+          raw_package_version = sh(script: 'node --print --eval "require(\'./package.json\').version"', returnStdout: true).trim();
           package_version = raw_package_version.trim()
           echo("Package version is '${package_version}'")
         }
         nodejs(configId: env.NPM_RC_FILE, nodeJSInstallationName: env.NODE_JS_VERSION) {
           sh('node --version')
-          sh('npm install --ignore-scripts')
+          sh('npm install')
         }
-      }
-    }
-    stage('lint') {
-      steps {
-        sh('node --version')
-        sh('npm run lint')
       }
     }
     stage('build') {
@@ -49,10 +41,10 @@ pipeline {
         sh('npm run build')
       }
     }
-    stage('test') {
+    stage('lint') {
       steps {
-        sh('node --version')
-        sh('npm run test')
+        sh('node --version');
+        sh('npm run lint-nofix');
       }
     }
     stage('publish') {
@@ -60,28 +52,23 @@ pipeline {
         script {
           def branch = env.BRANCH_NAME;
           def branch_is_master = branch == 'master';
-          def new_commit = env.GIT_PREVIOUS_COMMIT != env.GIT_COMMIT;
-
           if (branch_is_master) {
-            if (new_commit) {
-              script {
-                // let the build fail if the version does not match normal semver
-                def semver_matcher = package_version =~ /\d+\.\d+\.\d+/;
-                def is_version_not_semver = semver_matcher.matches() == false;
-                if (is_version_not_semver) {
-                  error('Only non RC Versions are allowed in master')
-                }
+            script {
+              // let the build fail if the version does not match normal semver
+              def semver_matcher = package_version =~ /\d+\.\d+\.\d+/;
+              def is_version_not_semver = semver_matcher.matches() == false;
+              if (is_version_not_semver) {
+                error('Only non RC Versions are allowed in master')
               }
+            }
 
-              def raw_package_name = sh(script: 'node --print --eval "require(\'./package.json\').name"', returnStdout: true).trim()
+            nodejs(configId: env.NPM_RC_FILE, nodeJSInstallationName: env.NODE_JS_VERSION) {
+              def raw_package_name = sh(script: 'node --print --eval "require(\'./package.json\').name"', returnStdout: true).trim();
               def current_published_version = sh(script: "npm show ${raw_package_name} version", returnStdout: true).trim();
               def version_has_changed = current_published_version != raw_package_version;
-
               if (version_has_changed) {
-                nodejs(configId: env.NPM_RC_FILE, nodeJSInstallationName: env.NODE_JS_VERSION) {
-                  sh('node --version')
-                  sh('npm publish --ignore-scripts')
-                }
+                sh('node --version')
+                sh('npm publish --ignore-scripts')
               } else {
                 println 'Skipping publish for this version. Version unchanged.'
               }
@@ -94,7 +81,6 @@ pipeline {
             def first_seven_digits_of_git_hash = env.GIT_COMMIT.substring(0, 8);
             def publish_version = "${package_version}-${first_seven_digits_of_git_hash}-b${env.BUILD_NUMBER}";
             def publish_tag = branch.replace("/", "~");
-
             nodejs(configId: env.NPM_RC_FILE, nodeJSInstallationName: env.NODE_JS_VERSION) {
               sh('node --version')
               sh("npm version ${publish_version} --no-git-tag-version --force")

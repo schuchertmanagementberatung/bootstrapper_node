@@ -41,7 +41,10 @@ export class AppBootstrapper {
     (nconf as any).Nconfetti = require('nconfetti');
 
     nconf.argv()
-      .env('__');
+      .env({
+        separator: '__',
+        parseValues: true,
+      });
 
     nconf.use('Nconfetti', {path: this.configPath, env: this.env});
 
