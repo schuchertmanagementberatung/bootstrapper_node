@@ -18,7 +18,8 @@
     "@essential-projects/bootstrapper_contracts": "^1.4.0",
     "addict-ioc": "~2.5.1",
     "bluebird": "~3.5.2",
-    "nconfetti": "~2.1.0"
+    "nconfetti": "~2.1.0",
+    "nconf": "^0.9.1"
   },
   "devDependencies": {
     "@essential-projects/eslint-config": "^1.0.0",
